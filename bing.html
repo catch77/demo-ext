@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+        <script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+        <script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
+        <style>
+            body {
+                background-image: url("https://cn.bing.com/th?id=OHR.SmogenSweden_ZH-CN0457682922_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp");
+                background-repeat: no-repeat;
+            }
+            input {
+                width: 100%;
+                height: 100%;
+            }
+            .bing {
+                position: absolute;
+                margin-top: 250px;
+                margin-left: 250px;
+            }
+            #tab {
+                position: absolute;
+                margin-top: 250px;
+                margin-left: 380px;
+            }
+            .search {
+                position: absolute;
+                margin-top: 250px;
+                margin-left: 380px;
+            }
+        </style>
+        <script>
+            Ext.onReady(function () {
+                var tabPanel = new Ext.TabPanel({
+                    renderTo: 'tab',
+                    border: false,
+                    hideBorders: true,
+                    colspan: 1,
+                    plain: true,
+                    height: 50,
+                    width: 800
+                });
+                tabPanel.add({
+                    title: '国内版',
+                    items: [
+                        {
+                            xtype: 'trigger',
+                            width: 800,
+                            height: 30,
+                            triggerClass: 'x-form-search-trigger',
+                        }
+                    ]
+                });
+                tabPanel.add({
+                    title: '国际版',
+                    items: [
+                        {
+                            xtype: 'trigger',
+                            width: 800,
+                            height: 30,
+                            triggerClass: 'x-form-search-trigger',
+                        }
+                    ]
+                });
+                tabPanel.activate(0);
+            })
+        </script>
+    </head>
+    <body>
+        <div id="bing">
+            <img class="bing" src="bing.png">
+            <div id="tab"></div>
+        </div>
+    </body>
+</html>

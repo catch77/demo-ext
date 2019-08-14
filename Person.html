@@ -1,0 +1,83 @@
+<html>
+    <link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
+    <style>
+
+    </style>
+    <script>
+        Person = Ext.extend(Ext.util.Observable, {
+            constructor: function(config) {
+                this.name = config.name;
+                // this.addEvents('walk', 'eat', 'sleep');
+                Person.superclass.constructor.call(this, config);
+            },
+            info: function (action) {
+                return this.name + ' is ' + action + 'ing';
+            }
+        });
+
+        Ext.onReady(function () {
+
+            var person = new Person({name: 'Penny'});
+
+            person.on('walk', function () {
+                Ext.Msg.alert(this.name, this.info('walk'));
+            });
+
+            person.on('eat', function () {
+                Ext.Msg.alert(this.name, this.info('eat'));
+            });
+
+            var walk = new Ext.Button({
+                cls:'walkingMan',
+                handler:function(){
+                    person.fireEvent('walk')
+                },
+                text: 'walk'
+            });
+
+            var eat = new Ext.Button({
+                cls:'eatingMan',
+                handler:function(){
+                    person.fireEvent('eat')
+                },
+                text: 'eat'
+            });
+
+            const container = new Ext.Container({
+                renderTo: 'walkingMan',
+                items: [
+                    walk,
+                    eat
+                ]
+            })
+
+            new Ext.BoxComponent({
+                renderTo: 'walkingMan',
+                style: 'background-color: red; position:absolute;',
+                pageX: 100,
+                pageY:50,
+                width: 200,
+                height:150
+            })
+
+            new Ext.Container({
+                renderTo: 'walkingMan',
+                style: 'background-color: blue; position:absolute;',
+                pageX: 500,
+                pageY: 50,
+                width: 200,
+                height: 150
+            })
+
+
+        })
+
+    </script>
+
+    <body>
+        <div id="walkingMan"></div>
+        <div id="test" class="test"></div>
+    </body>
+</html>

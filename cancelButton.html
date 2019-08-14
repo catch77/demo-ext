@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+        <script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+        <script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
+        <script>
+            Ext.ns('com.penny')
+
+            com.penny.CancelButton = Ext.extend(Ext.Button, {
+                text: 'cancel',
+                initComponent: function () {
+                    com.penny.CancelButton.superclass.initComponent.call(this);
+                    this.on('click', this.onButtonClick, this)
+                },
+                onButtonClick: function (oEvent) {
+                    Ext.Msg.alert('Cancel Button', 'This is customized cancel button, you clicked me.')
+                },
+                style: {color: 'red'}
+            })
+
+            Ext.reg('com.penny.CancelButton', com.penny.CancelButton);
+            var btn = new com.penny.CancelButton({
+                style: {color: 'red'}
+            })
+
+            ColorPlugin = function() {
+                this.init = function (cmp) {
+                    cmp.bodyStyle = 'color: red'
+                }
+            }
+
+
+
+            Ext.onReady(function () {
+                let panel = new Ext.Panel({
+                    renderTo: 'cancelButton',
+                    items: [{
+                        xtype: 'com.penny.CancelButton',
+                        id: 'cancel',
+                        plugins:[
+                            new ColorPlugin()
+                        ]
+                    },
+                        btn
+                    ]
+
+                })
+                Ext.getCmp('cancel').btnEl.setStyle('color', 'red');
+            })
+
+        </script>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div id="cancelButton">
+
+        </div>
+    </body>
+
+</html>
