@@ -38,31 +38,32 @@
                     colspan: 1,
                     plain: true,
                     height: 50,
-                    width: 800
-                });
-                tabPanel.add({
-                    title: '国内版',
+                    width: 800,
+                    activeTab: 0,
                     items: [
                         {
-                            xtype: 'trigger',
-                            width: 800,
-                            height: 30,
-                            triggerClass: 'x-form-search-trigger',
+                            title: '国内版',
+                            items: [
+                                {
+                                    xtype: 'trigger',
+                                    width: 800,
+                                    height: 30,
+                                    triggerClass: 'x-form-search-trigger',
+                                }
+                            ]
+                        },{
+                            title: '国际版',
+                            items: [
+                                {
+                                    xtype: 'trigger',
+                                    width: 800,
+                                    height: 30,
+                                    triggerClass: 'x-form-search-trigger',
+                                }
+                            ]
                         }
                     ]
                 });
-                tabPanel.add({
-                    title: '国际版',
-                    items: [
-                        {
-                            xtype: 'trigger',
-                            width: 800,
-                            height: 30,
-                            triggerClass: 'x-form-search-trigger',
-                        }
-                    ]
-                });
-                tabPanel.activate(0);
             })
         </script>
     </head>
