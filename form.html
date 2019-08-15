@@ -1,0 +1,237 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
+    <style></style>
+    <script>
+
+        Ext.onReady(function() {
+            let form = new Ext.form.FormPanel({
+                renderTo: 'form',
+                id: 'my-form',
+                defaultType: 'textfield',
+                labelAlign:'center',
+                title: 'form',
+                labelWidth: 50,
+                frame: true,
+                width: 300,
+                items:[{
+                    fieldLabel: 'name',
+                }],
+                buttons:[{
+                    id: 'submit',
+                    text: 'submit',
+                    handler: function () {
+                        Ext.Msg.alert('Success', 'Hello World!');
+                    }
+                },{
+                    text: 'reset',
+                    id: 'reset',
+                    handler: function () {
+                        Ext.getCmp('my-form').getForm().reset()
+                    }
+                }
+                ]
+            });
+        });
+
+        Ext.onReady(function() {
+            // Ext.QuickTips.init()
+            let form = new Ext.form.FormPanel({
+                renderTo: 'form',
+                id: 'my-form1',
+                defaultType: 'textfield',
+                labelAlign:'center',
+                title: 'form1',
+                labelWidth: 50,
+                frame: true,
+                width: 300,
+                items:[{
+                    id: 'qtip',
+                    fieldLabel: 'qtip',
+                    msgTarget: 'qtip',
+                    allowBlank: false,
+                },{
+                    id: 'title',
+                    fieldLabel: 'title',
+                    msgTarget: 'title',
+                    allowBlank: false,
+                },{
+                    id: 'side',
+                    fieldLabel: 'side',
+                    msgTarget: 'side',
+                    allowBlank: false,
+                },{
+                    id: 'under',
+                    msgTarget: 'under',
+                    fieldLabel: 'under',
+                    allowBlank: false,
+                },{
+                    id: 'elementId',
+                    fieldLabel: 'elementId',
+                    allowBlank: false,
+                    xtype: 'displayfield',
+                    msgTarget: 'formA'
+                }],
+                buttons:[{
+                    id: 'submit1',
+                    text: 'submit',
+                    handler: function () {
+                      Ext.getCmp('my-form1').getForm().markInvalid([
+                          {
+                              id: 'qtip',
+                              msg: 'qtip required'
+                           },{
+                              id: 'title',
+                              msg: 'title required'
+                          },{
+                              id: 'side',
+                              msg: 'side required'
+                          },{
+                              id: 'under',
+                              msg: 'under required'
+                          },{
+                              id: 'elementId',
+                              msg: 'elementId required'
+                          }
+                      ])
+                    }
+                },{
+                    text: 'reset',
+                    id: 'reset1',
+                    handler: function () {
+                        Ext.getCmp('my-form1').getForm().reset()
+                    }
+                }
+                ]
+            });
+
+            let dataGD = [
+                ['GZ', 'GuangZhou']
+            ]
+            let dataAH = [
+                ['HF', 'HeFei']
+            ]
+            let dataHN = [
+                ['XT', 'XiangTan']
+            ]
+
+            var storeCity = new Ext.data.SimpleStore({
+                fields: ['value', 'description'],
+                data: []
+            })
+
+            Ext.onReady(function () {
+                let textArea = new Ext.form.TextArea({
+                    width: 200,
+                    grow: true,
+                    preventScrollbars: true,
+                    fieldLabel: 'description',
+                    allowBlank: false,
+                    emptyText: 'input balalala',
+                    maxLength: 20,
+                    minLength: 5
+                })
+
+                let dateField = new Ext.form.DateField({
+                    fieldLabel: 'Birthday',
+                    emptyText: 'birthday',
+                    format: 'Y-m-d',
+                    disabledDays: [0,6]
+                })
+
+                let timeField = new Ext.form.TimeField({
+                    fieldLabel: 'Lunch time',
+                    emptyText: 'lunch time',
+                    minValue: '11:00 AM',
+                    maxValue: '14:00 PM',
+                    increment: 30
+                })
+                let htmlEditor = new Ext.form.HtmlEditor({
+                    fieldLabel: 'Article',
+                    enableAlignments: true,
+                    enableColors: true,
+                    enableFont: true,
+                    enableFontSize: true,
+                    enableFormat: true,
+                    enableLinks: true,
+                    enableLists: true,
+                    enableSourceEdit: true
+                });
+
+                let hiddenField = new Ext.form.Hidden({
+                    name: 'hiddenId'
+                });
+                hiddenField.setValue('something I don’t want you to know.');
+
+                let comboxProvince = new Ext.form.ComboBox({
+                    fieldLabel: 'Province',
+                    emptyText: 'Choose/Input your province',
+                    mode: 'local',
+                    store: new Ext.data.ArrayStore({
+                        id: 0,
+                        fields: ['value', 'description'],
+                        data: [['GD', 'GuangDong'], ['AH', 'AnHui'], ['HN', 'HuNan']]
+                    }),
+                    valueField: 'value',
+                    displayField: 'description',
+                    listeners: {
+                        select: function (comboBox) {
+                            var province = comboBox.getValue();
+                            comboxCity.reset()
+                            if (province == 'GD') {
+                                storeCity.loadData(dataGD)
+                            } else if (province == 'AH') {
+                                storeCity.loadData(dataAH)
+                            } else {
+                                storeCity.loadData(dataHN)
+                            }
+
+                        }
+                    }
+                });
+
+                let comboxCity = new Ext.form.ComboBox({
+                    fieldLabel: 'City',
+                    emptyText: 'Choose/Input your city',
+                    mode: 'local',
+                    store: storeCity,
+                    valueField: 'value',
+                    displayField: 'description',
+                    triggerAction: 'all'
+                });
+
+                let myForm = new Ext.form.FormPanel({
+                    renderTo: 'form',
+                    id: 'myForm',
+                    items: [
+                        textArea,
+                        dateField,
+                        timeField,
+                        htmlEditor,
+                        hiddenField,
+                        comboxProvince,
+                        comboxCity
+                    ],
+                    buttons:[{
+                        id: 'submit',
+                        text: 'submit',
+                        handler: function () {
+                            var value=Ext.getCmp("myForm").getForm().getValues(false);
+                            Ext.Msg.alert("title",JSON.stringify(value))
+                        }
+                    }]
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="form">
+    </div>
+    <div id="formA">
+    </div>
+</body>
+</html>

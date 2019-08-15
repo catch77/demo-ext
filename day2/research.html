@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+    <title>Env Question</title>
+    <script>
+        var navHandler = function(direction) {
+            var card = Ext.getCmp('cardId').layout;
+            var prev = Ext.getCmp('prev');
+            var next = Ext.getCmp('next');
+            var activeId = card.activeItem.id;
+
+            if (activeId === 'first') {
+                if (direction === 1) {
+                    card.setActiveItem(1);
+                    prev.setDisabled(false);
+                }
+            } else if (activeId === 'second') {
+                var items = Ext.getCmp('question2').items
+                var values = ''
+                for (var i = 1; i < items.length; i++) {
+                    if (items.get(i).checked) {
+                        values += items.get(i).inputValue + ' '
+                    }
+                }
+                Ext.getCmp('result2Id').setValue(values)
+                if (direction === -1) {
+                    card.setActiveItem(0);
+                    prev.setDisabled(true);
+                } else {
+                    card.setActiveItem(2);
+                    next.setDisabled(true);
+                }
+            } else if (activeId === 'result') {
+                if (direction === -1) {
+                    card.setActiveItem(1);
+                    next.setDisabled(false);
+                }
+            }
+        }
+
+        var changeFunc = function(self, newValue) {
+            if (newValue) {
+                Ext.getCmp('result1Id').setValue(self.inputValue)
+            }
+        }
+
+        Ext.onReady(function () {
+            var layout = new Ext.Viewport({
+                layout: 'border',
+                items: [
+                    {
+                        region: 'west',
+                        title: '左边呀',
+                        width: 200,
+                        split: true
+                    },
+                    {
+                        region: 'east',
+                        title: '右边呀',
+                        width: 200,
+                        collapsible: true
+                    },
+                    {
+                        region: 'center',
+                        title: '中间呀',
+                        layout: 'card',
+                        id: 'cardId',
+                        activeItem: 0,
+                        bbar: [
+                            {
+                                id: 'prev',
+                                text: '上一步',
+                                handler: navHandler.createDelegate(this, [-1]),
+                                disabled: true
+                            },
+                            {
+                                id: 'next',
+                                text: '下一步',
+                                handler: navHandler.createDelegate(this, [1])
+                            }
+                        ],
+                        items: [
+                            {
+                                id: 'first',
+                                labelAlign: 'center',
+                                items: [
+                                    {
+                                        id: 'question1',
+                                        xtype:'fieldset',
+                                        title: '单选',
+                                        defaultType: 'radio',
+                                        items: [
+                                            {html: '<h2>Q1: 番茄酱属于以下哪种垃圾?(单选)</h2>', xtype: 'box'},
+                                            {boxLabel: 'A.湿垃圾', name: 'firstQuestion', inputValue: 'A', listeners: {'check': changeFunc}},
+                                            {boxLabel: 'B.干垃圾', name: 'firstQuestion', inputValue: 'B', listeners: {'check': changeFunc}},
+                                            {boxLabel: 'C.有害垃圾', name: 'firstQuestion', inputValue: 'C', listeners: {'check': changeFunc}},
+                                            {boxLabel: 'D.可回收垃圾', name: 'firstQuestion', inputValue: 'D', listeners: {'check': changeFunc}}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                id: 'second',
+                                labelAlign: 'center',
+                                items: [
+                                    {
+                                        id: 'question2',
+                                        xtype:'fieldset',
+                                        title: '多选',
+                                        defaultType: 'checkbox',
+                                        items: [
+                                            {html: '<h2>Q50: 王大叔出门遛狗后，哪个是正确处理狗粑粑的方法?(多选)</h2>', xtype: 'box'},
+                                            {boxLabel: 'A.把粑粑用废报纸包好带回家冲掉', name: 'a2', inputValue: 'A'},
+                                            {boxLabel: 'B.受污染的报纸按有害垃圾处理', name: 'b2', inputValue: 'B'},
+                                            {boxLabel: 'C.没受污染的报纸按可回收垃圾处理', name: 'c2', inputValue: 'C'},
+                                            {boxLabel: 'D.受污染的报纸浸水后当湿垃圾处理', name: 'd2', inputValue: 'D'}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                id: 'result',
+                                items: [
+                                    {
+                                        id: 'formId',
+                                        xtype:'form',
+                                        title: '确认结果',
+                                        frame: true,
+                                        defaults: {
+                                            width: 400
+                                        },
+                                        defaultType: 'textfield',
+                                        items: [
+                                            {
+                                                id: 'result1Id',
+                                                fieldLabel: 'question 1 result',
+                                                name: 'result1',
+                                                anchor: '80%',
+                                            },
+                                            {
+                                                id: 'result2Id',
+                                                fieldLabel: 'question 2 result',
+                                                name: 'result2',
+                                                anchor: '80%',
+                                            }
+                                        ],
+                                        buttons: [
+                                            {
+                                                text: 'submit',
+                                                listeners: {
+                                                    'click': function (btn, eventObject) {
+                                                        var result1 = Ext.getCmp('formId').form.getValues().result1
+                                                        var result2 = Ext.getCmp('formId').form.getValues().result2
+                                                        if (result1 === 'A') {
+                                                            Ext.MessageBox.alert('Result', 'Congratulation!');
+                                                        } else if (result1 === '' || result2 === '') {
+                                                            Ext.MessageBox.alert('Result', 'Sorry, Answer can not empty');
+                                                        } else {
+                                                            Ext.MessageBox.alert('result', 'Sorry, your answer is wrong!');
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

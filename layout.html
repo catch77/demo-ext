@@ -1,0 +1,96 @@
+<html>
+<meta charset="utf-8">
+<link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+<script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+<script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
+<style></style>
+<script>
+    Ext.onReady(function() {
+
+        let panel = new Ext.Panel({
+            title: 'Panel',
+            autoHeight: true,
+            style: 'background-color: red',
+            html: 'gun'
+        });
+        let win = new Ext.Window({
+            title: 'window',
+            width: 400,
+            height: 300,
+            layout: 'fit',
+            items: [panel]
+        });
+        win.show()
+    });
+
+    Ext.onReady(function () {
+
+        var navHandler = function(direction){
+            var wizard = Ext.getCmp('card').layout;
+            var prev = Ext.getCmp('move-prev');
+            var next = Ext.getCmp('move-next');
+            var activeId = wizard.activeItem.id;
+
+            if (activeId == 'card-0') {
+                if (direction == 1) {
+                    wizard.setActiveItem(1);
+                    prev.setDisabled(false);
+                }
+            } else if (activeId == 'card-1') {
+                if (direction == -1) {
+                    wizard.setActiveItem(0);
+                    prev.setDisabled(true);
+                } else {
+                    wizard.setActiveItem(2);
+                    next.setDisabled(true);
+                }
+            } else if (activeId == 'card-2') {
+                if (direction == -1) {
+                    wizard.setActiveItem(1);
+                    next.setDisabled(false);
+                }
+            }
+
+        };
+
+        var card = new Ext.Panel({
+            renderTo: 'layout',
+            title: 'wizard',
+            id: 'card',
+            layout: 'card',
+            activeItem: 0,
+            defaults: {
+                border: false
+            },
+            bbar: [
+                {
+                    id: 'move-prev',
+                    text: 'Back',
+                    handler: navHandler.create0Delegate(this, [-1]),
+                    disable: true
+                }, '->', {
+                    id: 'move-next',
+                    text: 'Next',
+                    handler: navHandler.createDelegate(this, [1])
+                }
+            ],
+            items: [{
+                id: 'card-0',
+                html: '<h1>Welcome to the Wizard!</h1><p>Step 1 of 3</p>'
+            },{
+                id: 'card-1',
+                html: '<p>Step 2 of 3</p>'
+            },{
+                id: 'card-2',
+                html: '<h1>Congratulations!</h1><p>Step 3 of 3 - Complete</p>'
+            }]
+        })
+    })
+
+</script>
+<body>
+<div id="layout">
+
+</div>
+</body>
+</html>

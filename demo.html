@@ -1,12 +1,100 @@
 <html>
+    <meta charset="utf-8">
     <link href="./ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
     <script src="./ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
     <script src="./ext-3.3.0/ext-all.js" type="text/javascript"></script>
     <style></style>
     <script>
         Ext.onReady(function() {
-        Ext.MessageBox.alert('Greeting', 'Hello World!');
+            var form = new Ext.form.FormPanel({
+                renderTo: 'form',
+                fileUpload: true,
+                items:[{
+                    xtype: 'textfield',
+                    fieldLabel: 'Resume',
+                    inputType: 'file'
+                },{
+                    xtype: 'fieldset',
+                    fieldLabel: 'fruit',
+                    items: [{
+                        xtype: 'checkbox',
+                        name: 'fruit',
+                        boxLabel: 'Apple',
+                        checked: true
+                    },{
+                        xtype: 'checkbox',
+                        name: 'fruit',
+                        boxLabel: 'Grape'
+                    },{
+                        xtype: 'checkbox',
+                        name: 'fruit',
+                        boxLabel: 'Pear'
+                    }]
+                },{
+                    xtype: 'fieldset',
+                    fieldLabel: 'habit',
+                    defaultType: 'radio',
+                    items: [{
+                        name: 'habit',
+                        boxLabel: 'Sing',
+                        checked: true
+                    },{
+                        name: 'habit',
+                        boxLabel: 'Jump'
+                    },{
+                        name: 'habit',
+                        boxLabel: 'Rap'
+                    }]
+                }]
+            })
         });
-    </script>    
-    
+
+        Ext.onReady(function() {
+
+            var jsonReader = new Ext.data.JsonReader({}, [
+                {name: 'text', type: 'string'},
+                {name: 'number', type: 'int'},
+                {name: 'date', type: 'date', dateFormat: 'Y-m-d'},
+                {name: 'combo', type: 'int'}
+        ]);
+
+            var form = new Ext.form.FormPanel({
+                renderTo: 'form',
+                title: 'auto fill data in form',
+                reader: jsonReader,
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: '文本',
+                    name: 'text'
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: '数字',
+                    name: 'number'
+                },{
+                    xtype: 'datefield',
+                    fieldLabel: '日期',
+                    name: 'date'
+                },{
+                    xtype: 'combo',
+                    fieldLabel: '下拉',
+                    name: 'combo'
+                },{
+                    buttons: [{
+                        text: '提交',
+                    },{
+                        text: '读取',
+                        handler: function () {
+                            form.getForm().load({url: 'json_reader.txt'})
+                        }
+                    }]
+                },]
+            })
+
+        });
+    </script>
+    <body>
+        <div id="form">
+
+        </div>
+    </body>
 </html>
