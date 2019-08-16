@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+    <title>Student</title>
+    <script>
+        let selectNode = null
+        Ext.onReady(function () {
+            const root = new Ext.tree.AsyncTreeNode({text: 'School', expanded: true});
+            const treeLoader = new Ext.tree.TreeLoader({dataUrl: 'school.txt'})
+
+            const win = new Ext.Window({
+                layout:'fit',
+                width:500,
+                height:150,
+                closeAction:'hide',
+                plain: true,
+
+                items: new Ext.FormPanel({
+                    title: 'form',
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            checkboxToggle: true,
+                            title: 'add class or student',
+                            autoHeight: true,
+                            defaultType: 'textfield',
+                            collapsible: true,
+                            items: [
+                                {
+                                    id: 'name-id',
+                                    fieldLabel: 'name',
+                                    name: 'name',
+                                    anchor: '90%'
+                                }
+                            ]
+                        }
+                    ]
+                }),
+                buttons: [{
+                    text:'Add',
+                    listeners: {
+                        'click': function (btn, eventObject) {
+                            if (selectNode.leaf === undefined || selectNode.leaf === false) {
+                                // add class
+                                if (selectNode.text === 'School') {
+                                    root.appendChild(new Ext.tree.AsyncTreeNode({text: Ext.getCmp('name-id').getValue(),
+                                        expanded: true,
+                                        children: [],
+                                        id: Ext.getCmp('name-id').getValue()+'-id'
+                                    }));
+                                } else {
+                                    selectNode.appendChild(new Ext.tree.AsyncTreeNode({text: Ext.getCmp('name-id').getValue(),
+                                        leaf: true,
+                                        checked: false,
+                                        id: Ext.getCmp('name-id').getValue()+'-id'
+                                    }))
+                                }
+                            }
+                        }
+                    }
+                },{
+                    text: 'Close',
+                    handler: function(){
+                        win.hide();
+                    }
+                }]
+            });
+
+            const menu = new Ext.menu.Menu({
+                items: [
+                    {
+                        id: 'deleteNode',
+                        text: 'Delete Node'
+                    },
+                    {
+                        id: 'addNode',
+                        text: 'Add Node'
+                    }
+                ],
+                listeners: {
+                    'itemClick': function (item) {
+                        const currentNode = item.parentMenu.contextNode;
+                        switch (item.id) {
+                            case 'deleteNode':
+                                if (currentNode.parentNode) {
+                                    currentNode.remove();
+                                }
+                                break;
+                            case 'addNode':
+                                selectNode = currentNode;
+                                if (selectNode.leaf === true) {
+                                    Ext.Msg.alert('Error', 'Sorry, you select a leaf node');
+                                } else {
+                                    win.show();
+                                }
+                                break;
+                        }
+                    }
+                }
+            })
+
+            const layout = new Ext.Viewport({
+                layout: 'border',
+                items: [
+                    {
+                        id: 'student-tree-id',
+                        region: 'west',
+                        xtype: 'treepanel',
+                        title: 'treeLayout',
+                        width: 300,
+                        autoScroll: true,
+                        animate: true,
+                        useArrows: true,
+                        frame: true,
+                        enableDD: true,
+                        root: root,
+                        loader: treeLoader,
+                        contextMenu: menu,
+                        listeners: {
+                            'click': function(node, e){
+                                console.log(node)
+                                selectNode = node
+                            },
+                            'contextmenu': function (node, e) {
+                                node.select();
+                                const treeContextMenu = node.getOwnerTree().contextMenu;
+                                treeContextMenu.contextNode = node;
+                                treeContextMenu.showAt(e.getXY());
+                            },
+                            'nodedrop': function (e) {
+                                Ext.Msg.alert('Drag Event', 'currently dragging node:' + e.dropNode.text + ' dropping into node:' + e.target.text + ', dragging pattern is ' + e.point);
+                            }
+                        }
+                    },
+                    {
+                        id: 'form-layout-id',
+                        xtype: 'panel',
+                        title: 'formLayout',
+                        region: 'center',
+                        items: [
+                            {
+                                xtype: 'form',
+                                width: 500,
+                                height: 150,
+                                frame: true,
+                                title: 'form',
+                                items: [
+                                    {
+                                        xtype: 'fieldset',
+                                        checkboxToggle: true,
+                                        title: 'add class or student',
+                                        autoHeight: true,
+                                        default: {width: 250},
+                                        defaultType: 'textfield',
+                                        collapsible: true,
+                                        items: [
+                                            {
+                                                id: 'nameId',
+                                                fieldLabel: 'name',
+                                                name: 'name',
+                                                anchor: '95%'
+                                            }
+                                        ]
+                                    }
+                                ],
+                                buttons: [
+                                    {
+                                        text: 'Add',
+                                        listeners: {
+                                            'click': function (btn, eventObject) {
+                                                if (selectNode === null) {
+                                                    Ext.Msg.alert('Error', 'please select node');
+                                                } else if (selectNode.leaf === undefined || selectNode.leaf === false) {
+                                                    // add class
+                                                    if (selectNode.text === 'School') {
+                                                        root.appendChild(new Ext.tree.AsyncTreeNode({text: Ext.getCmp('nameId').getValue(),
+                                                            expanded: true,
+                                                            children: [],
+                                                            id: Ext.getCmp('nameId').getValue()+'-id'
+                                                        }));
+                                                    } else {
+                                                        selectNode.appendChild(new Ext.tree.AsyncTreeNode({text: Ext.getCmp('nameId').getValue(),
+                                                            leaf: true,
+                                                            checked: false,
+                                                            id: Ext.getCmp('nameId').getValue()+'-id'
+                                                        }))
+                                                    }
+                                                } else {
+                                                    Ext.Msg.alert('Error', 'Sorry, you select a leaf node');
+                                                }
+                                            }
+                                        }
+                                    },
+                                ]
+                            }
+                        ]
+
+                    }
+                ]
+            })
+
+            const editor = new Ext.tree.TreeEditor(Ext.getCmp('student-tree-id'), {allowBlank: false}, {
+                listeners: {
+                    'complete': function(editor, currVal, origVal) {
+                        Ext.Msg.alert('Tree Editor', 'node text changed from ' + origVal + ' to ' + currVal);
+                    }
+                }
+            })
+
+            Ext.getCmp('student-tree-id').expandAll();
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

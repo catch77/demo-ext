@@ -1,0 +1,23 @@
+[
+  {"text": "Class1", "children": [
+      {"text": "crt", "checked": false, "leaf": true, "id": "crt1"},
+      {"text": "hyy", "checked": false, "leaf": true, "id": "hyy1"},
+      {"text": "hjy", "checked": false, "leaf": true, "id": "hjy1"},
+      {"text": "lmk", "checked": false, "leaf": true, "id": "lmk1"},
+      {"text": "czh", "checked": false, "leaf": true, "id": "czh1"},
+      {"text": "lxw", "checked": false, "leaf": true, "id": "lxw1"}
+    ], "id": "clz1"
+  },
+  {"text": "Class2", "children": [
+      {"text": "wpy", "checked": false, "leaf": true, "id": "wpy1"},
+      {"text": "zzd", "checked": false, "leaf": true, "id": "zzd1"},
+      {"text": "yt", "checked": false, "leaf": true, "id": "yt1"},
+      {"text": "xl", "checked": false, "leaf": true, "id": "xl1"}
+    ],"id": "clz2"
+  },
+  {"text": "Class3", "children": [
+    {"text": "hwr", "checked": false, "leaf": true, "id": "hwr1"},
+    {"text": "by", "checked": false, "leaf": true, "id": "by1"}
+  ],"id": "clz3"
+  }
+]
