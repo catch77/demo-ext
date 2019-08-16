@@ -1,0 +1,381 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+</head>
+<script>
+
+    // //anchorLayout
+    // let viewport = new Ext.Viewport({
+    //     renderTo: 'layout',
+    //     layout: 'anchor',
+    //     anchorSize: {width: 800, height: 600},
+    //     items: [{
+    //         title: 'Item 1',
+    //         html: 'Content 1',
+    //         width: 800,
+    //         anchor: 'right 20%'
+    //     }, {
+    //         title: 'Item 2',
+    //         html: 'Content 2',
+    //         width: 300,
+    //         anchor: '50% 30%'
+    //     }, {
+    //         title: 'Item 3',
+    //         html: 'Content 3',
+    //         width: 600,
+    //         anchor: '-100 50%'
+    //     }]
+    // });
+
+    // //formLayout
+    // Ext.onReady(function () {
+    //     // Required if showing validation messages
+    //     Ext.QuickTips.init();
+    //
+    //     // While you can create a basic Panel with layout:'form', practically
+    //     // you should usually use a FormPanel to also get its form functionality
+    //     // since it already creates a FormLayout internally.
+    //     var form = new Ext.form.FormPanel({
+    //         renderTo: 'layout',
+    //         title: 'Form Layout',
+    //         bodyStyle: 'padding:15px',
+    //         width: 350,
+    //         defaultType: 'textfield',
+    //         defaults: {
+    //             // applied to each contained item
+    //             width: 230,
+    //             msgTarget: 'side'
+    //         },
+    //         items: [{
+    //             fieldLabel: 'First Name',
+    //             name: 'first',
+    //             allowBlank: false,
+    //             labelSeparator: ':' // override labelSeparator layout config
+    //         },{
+    //             fieldLabel: 'Last Name',
+    //             name: 'last'
+    //         },{
+    //             fieldLabel: 'Email',
+    //             name: 'email',
+    //             vtype:'email'
+    //         }, {
+    //             xtype: 'textarea',
+    //             hideLabel: true,     // override hideLabels layout config
+    //             name: 'msg',
+    //             anchor: '100% 40%'
+    //         }
+    //         ],
+    //         buttons: [
+    //             {text: 'Save'},
+    //             {text: 'Cancel'}
+    //         ],
+    //         layoutConfig: {
+    //             labelSeparator: '~' // superseded by assignment below
+    //         },
+    //         // config options applicable to container when layout='form':
+    //         hideLabels: false,
+    //         labelAlign: 'left',   // or 'right' or 'top'
+    //         labelSeparator: '>>', // takes precedence over layoutConfig value
+    //         labelWidth: 65,       // defaults to 100
+    //         labelPad: 8           // defaults to 5, must specify labelWidth to be honored
+    //     });
+    // })
+
+    //ColumnLayout
+    Ext.onReady(function () {
+        // // All columns are percentages -- they must add up to 1
+        // var p = new Ext.Panel({
+        //     title: 'Column Layout - Percentage Only',
+        //     layout:'column',
+        //     renderTo: 'layout',
+        //     items: [{
+        //         title: 'Column 1',
+        //         columnWidth: .25
+        //     },{
+        //         title: 'Column 2',
+        //         columnWidth: .6
+        //     },{
+        //         title: 'Column 3',
+        //         columnWidth: .15
+        //     }]
+        // });
+
+        // // Mix of width and columnWidth -- all columnWidth values must add up
+        // // to 1. The first column will take up exactly 120px, and the last two
+        // // columns will fill the remaining container width.
+        // var p = new Ext.Panel({
+        //     title: 'Column Layout - Mixed',
+        //     layout:'column',
+        //     renderTo: 'layout',
+        //     items: [{
+        //         title: 'Column 1',
+        //         width: 120
+        //     },{
+        //         title: 'Column 2',
+        //         columnWidth: .8
+        //     },{
+        //         title: 'Column 3',
+        //         columnWidth: .2
+        //     }]
+        // });
+
+        // //TableLayout
+        // // This code will generate a layout table that is 3 columns by 2 rows
+        // // with some spanning included.  The basic layout will be:
+        // // +--------+-----------------+
+        // // |   A    |   B             |
+        // // |        |--------+--------|
+        // // |        |   C    |   D    |
+        // // +--------+--------+--------+
+        // let table = new Ext.Panel({
+        //     title: 'Table Layout',
+        //     layout: 'table',
+        //     renderTo: 'layout',
+        //     defaults: {
+        //         // applied to each contained panel
+        //         bodyStyle: 'padding:20px'
+        //     },
+        //     layoutConfig: {
+        //         // The total column count must be specified here
+        //         columns: 8
+        //     },
+        //     items: [{
+        //         html: '<p>Cell A content</p>',
+        //         rowspan: 3,
+        //     }, {
+        //         html: '<p>Cell B content</p>',
+        //         colspan: 6,
+        //         renderHidden: true
+        //     }, {
+        //         html: '<p>Cell C content</p>',
+        //         colspan: 2
+        //     }, {
+        //         html: '<p>Cell D content</p>'
+        //     }]
+        // });
+
+        // //HBoxLayout
+        // let hBox = new Ext.Panel({
+        //     title: 'HBox Layout',
+        //     layout: 'hbox',
+        //     renderTo: 'layout',
+        //     defaults:{margins:'0 5 0 0'},
+        //     items:[{
+        //         xtype:'button',
+        //         text: 'Button 1',
+        //         flex:1
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 2',
+        //         flex:1
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 3',
+        //         flex:1
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 4',
+        //         flex:3,
+        //         margins:'0'
+        //     }]
+        // })
+
+        // //VBoxLayout
+        // let vBox = new Ext.Panel({
+        //     title: 'vBox Layout',
+        //     layout: 'vbox',
+        //     renderTo: 'layout',
+        //     defaults:{margins:'5 0 20 0'},
+        //     layoutConfig: {
+        //         align:'left',
+        //         pack: 'start'
+        //     },
+        //     items:[{
+        //         xtype:'button',
+        //         text: 'Button 1',
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 2',
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 3',
+        //     },{
+        //         xtype:'button',
+        //         text: 'Button 4',
+        //     }]
+        // })
+
+        // //treeLayout
+        // let tree = new Ext.tree.TreePanel({
+        //     renderTo: 'layout',
+        //     text: 'Fruits',
+        //     checked: true,
+        //     expanded: true,
+        //     root: {
+        //         nodeType: 'async',
+        //         text: 'Fruits',
+        //         draggable: false,
+        //         id: 'source'
+        //     }
+        // })
+        // let apple = new Ext.tree.TreeNode({text: 'Apples', checked: true})
+        // let grape = new Ext.tree.TreeNode({text: 'Grapes', checked: true})
+        // let pear = new Ext.tree.TreeNode({text: 'Pear'})
+        // let strawberry = new Ext.tree.TreeNode({text: 'Strawberry'})
+        // let watermelon = new Ext.tree.TreeNode({text: 'Watermelon'})
+        // tree.root.appendChild(apple)
+        // tree.root.appendChild(grape)
+        // tree.root.appendChild(pear)
+        // tree.root.appendChild(strawberry)
+        // tree.root.appendChild(watermelon)
+        //
+        // let root1 = new Ext.tree.TreePanel({
+        //     renderTo: 'layout',
+        //     text: 'Vegetables',
+        //     checked: true,
+        //     expanded: true
+        // })
+
+        //treeLayout
+
+        let menu = new Ext.menu.Menu({
+            items: [{
+                id: 'deleteNode',
+                text: 'Delete'
+            },{
+                id: 'disableNode',
+                text: 'Disable'
+            }],
+            listeners: {
+                itemclick: function (item) {
+                    switch (item.id) {
+                        case 'deleteNode':
+                            let currentNode = item.parentMenu.contextNode;
+                            if (currentNode.parentNode) {
+                                currentNode.remove()
+                            }
+                            break
+                        case 'disableNode':
+                            let current = item.parentMenu.contextNode;
+                                current.disable()
+                            break
+                    }
+                }
+            }
+        })
+
+        let tree = new Ext.tree.TreePanel({
+            el: 'layout',
+            useArrows: true,
+            contextMenu: menu,
+            enableDD:true,
+            listeners: {
+                // click: function (node) {
+                //     Ext.Msg.alert('Tree Event', 'you clicked node:' + node.text)
+                // },
+                checkchange: function (node, checked) {
+                    Ext.Msg.alert('Tree Event', 'you ' + (checked? 'checked':'unchecked')
+                    + ' node:' + node.text)
+                },
+                // expandnode: function (node) {
+                //     Ext.Msg.alert('Tree Event', 'you ' + 'expand')
+                // },
+                contextmenu: function (node, e) {
+                    node.select()
+                    let treeContextMenu = node.getOwnerTree().contextMenu;
+                    treeContextMenu.contextNode = node
+                    treeContextMenu.showAt(e.getXY())
+                },
+                nodedrop: function (e) {
+                    Ext.Msg.alert('Drag Event', 'currently dragging node:' + e.dropNode.text + ' dropping into node:'
+                        + e.target.text + ', dragging pattern is ' + e.point);
+                }
+            }
+        })
+
+        let treeEditor = new Ext.tree.TreeEditor(tree, {allowBlank: false},{
+            listeners: {
+                complete: function(editor, currVal, origVal) {
+                    console.log(editor)
+                    if (currVal !== origVal)
+                        Ext.Msg.alert('Tree Editor', 'node text changed from ' + origVal + ' to ' + currVal);
+                    // if (currVal.includes('Zh'))
+                        // editor.editNode.
+                }
+            }
+        })
+
+        let root = new Ext.tree.TreeNode({text: 'Fruits', checked: true, expanded: true})
+        let apple = new Ext.tree.TreeNode({text: '🍎Apples', checked: true})
+        let grape = new Ext.tree.TreeNode({text: '🍇Grapes', checked: true})
+        let pear = new Ext.tree.TreeNode({text: '🍐Pear'})
+        let strawberry = new Ext.tree.TreeNode({text: '🍓Strawberry'})
+        let watermelon = new Ext.tree.TreeNode({text: '🍉Watermelon'})
+
+        tree.setRootNode(root);
+        root.appendChild(apple)
+        root.appendChild(grape)
+        root.appendChild(pear)
+        root.appendChild(strawberry)
+        root.appendChild(watermelon)
+        tree.render()
+
+        let tree2 = new Ext.tree.TreePanel({
+            el: 'layout2',
+            useArrows: true,
+            contextMenu: menu,
+            enableDD:true,
+            listeners: {
+                // click: function (node) {
+                //     Ext.Msg.alert('Tree Event', 'you clicked node:' + node.text)
+                // },
+                checkchange: function (node, checked) {
+                    Ext.Msg.alert('Tree Event', 'you ' + (checked? 'checked':'unchecked')
+                        + ' node:' + node.text)
+                },
+                // expandnode: function (node) {
+                //     Ext.Msg.alert('Tree Event', 'you ' + 'expand')
+                // },
+                contextmenu: function (node, e) {
+                    node.select()
+                    let treeContextMenu = node.getOwnerTree().contextMenu;
+                    treeContextMenu.contextNode = node
+                    treeContextMenu.showAt(e.getXY())
+                },
+                nodedrop: function (e) {
+                    Ext.Msg.alert('Drag Event', 'currently dragging node:' + e.dropNode.text + ' dropping into node:'
+                        + e.target.text + ', dragging pattern is ' + e.point);
+                }
+            }
+        })
+
+        let root2 = new Ext.tree.TreeNode({text: 'Fruits', checked: true, expanded: true})
+        let apple2 = new Ext.tree.TreeNode({text: '🍎Apples', checked: true})
+        let grape2 = new Ext.tree.TreeNode({text: '🍇Grapes', checked: true})
+        let pear2 = new Ext.tree.TreeNode({text: '🍐Pear'})
+        let strawberry2 = new Ext.tree.TreeNode({text: '🍓Strawberry'})
+        let watermelon2 = new Ext.tree.TreeNode({text: '🍉Watermelon'})
+
+        tree2.setRootNode(root2);
+        root2.appendChild(apple2)
+        root2.appendChild(grape2)
+        root2.appendChild(pear2)
+        root2.appendChild(strawberry2)
+        root2.appendChild(watermelon2)
+        tree2.render()
+
+    })
+
+</script>
+<body>
+<div id="layout">
+
+</div>
+<div id="layout2">
+
+</div>
+</body>
+</html>
