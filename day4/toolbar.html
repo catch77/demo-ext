@@ -1,0 +1,105 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+</head>
+<script>
+    Ext.onReady(function () {
+    let separator = new Ext.menu.Separator({})
+        let checkitem = new Ext.menu.CheckItem({
+            text: 'check',
+            group: 'check',
+            checkHandler:function (checkitem, checked) {
+                    Ext.MessageBox.alert('GOODBYE', 'you clicked me. now is' + (checked? 'checked': 'unchecked'))
+                }
+        })
+        let save = new Ext.menu.CheckItem({
+            text: 'save',
+            group: 'check',
+            checkHandler:function (checkitem, checked) {
+                Ext.MessageBox.alert('GOODBYE', 'you clicked me. now is' + (checked? 'checked': 'unchecked'))
+            }
+        })
+        let saveas = new Ext.menu.CheckItem({
+            text: 'saveas',
+            group: 'check',
+            checkHandler:function (checkitem, checked) {
+                Ext.MessageBox.alert('GOODBYE', 'you clicked me. now is' + (checked? 'checked': 'unchecked'))
+            }
+        })
+        let text = new Ext.menu.TextItem({text: 'text'})
+        let date = new Ext.DatePicker({
+            text: 'date',
+            id: 'date',
+            handler:function (picker, date) {
+                console.log(Ext.getCmp('date'))
+                console.log(Ext.getDom('date'))
+                Ext.Msg.alert('time', 'you pick '+ date)
+            }
+        })
+        let color = new Ext.ColorPalette({
+            text: 'color',
+            id: 'color',
+            handler:function (colorPalette, color) {
+                console.log(Ext.getDom('color'))
+                console.log(Ext.get('layout'))
+                console.log(Ext.getBody())
+                console.log(Ext.getDoc())
+                Ext.Msg.alert('time', 'you pick '+ color)
+            }
+        })
+        // let context = new Ext.menu.Menu({
+        //     items: [{
+        //         text: 'context',
+        //         menu: [{
+        //             items:[
+        //                 'aa',
+        //                 'bb',
+        //                 'cc'
+        //             ]
+        //         }]
+        //     }]
+        // })
+    let menu = new Ext.menu.Menu({
+        items: [
+            save,
+            checkitem,
+            saveas,
+            separator,
+            {text: 'repalace'},
+            text
+        ]
+    });
+        let datemenu = new Ext.menu.Menu({
+            items: [
+                date
+            ]
+        });
+
+        let panel = new Ext.Toolbar({
+            el: 'layout',
+            height: 200,
+            width: 200,
+            frame: true,
+            items : [{
+                text: 'date',
+                menu: [date]
+            },{
+                text: 'color',
+                menu: [color]
+            },{
+                text: 'context'
+            }
+            ]});
+
+        panel.render()
+    })
+</script>
+<body>
+<div id="layout">
+
+</div>
+</body>
+</html>

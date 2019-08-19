@@ -6,10 +6,27 @@
     <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
 </head>
     <script>
-
+        Ext.onReady(function() {
+            var toolbar = new Ext.Toolbar({
+                renderTo: 'layout',
+                width: 600,
+                height: 100,
+                items: [
+                    {
+                        text: 'File',
+                        listeners: {
+                            click: function(button, e) {
+                                Ext.Msg.alert('Toolbar', 'You Click File Menu!');
+                            }
+                        }
+                    },
+                    {xtype: 'splitbutton', text: 'Home'}
+                ]
+            });
+        });
     </script>
 <body>
-    <div>
+    <div id="layout">
 
     </div>
 </body>

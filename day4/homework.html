@@ -1,0 +1,213 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+</head>
+<script>
+    Ext.onReady(function () {
+
+        var Runner = function(){
+            var f = function(v, pbar, btn, count, cb){
+                return function(){
+                    if(v > count){
+                        btn.dom.disabled = false;
+                        cb();
+                    }else{
+                        pbar.updateProgress(v/count, 'Loading item ' + v + ' of '+count+'...');
+                    }
+                };
+            };
+            return {
+                run : function(pbar, btn, count, cb){
+                    btn.dom.disabled = true;
+                    var ms = 5000/count;
+                    for(var i = 1; i < (count+2); i++){
+                        setTimeout(f(i, pbar, btn, count, cb), i*ms);
+                    }
+                }
+            }
+        }();
+
+        let pbar2 = new Ext.ProgressBar({
+            text:'Ready',
+            id:'pbar2',
+            cls:'left-align'
+        });
+
+        let tablePanel = new Ext.Panel({
+            title: 'table',
+            frame: true,
+            width: 1000,
+            height: 400,
+            renderTo: 'table'
+        })
+
+        let win = new Ext.Window({
+            layout:'fit',
+            width:500,
+            height:300,
+            closeAction:'hide',
+            plain: true,
+
+            items: new Ext.FormPanel({
+                title: 'form',
+                items: [
+                    {
+                        xtype: 'fieldset',
+                        checkboxToggle: true,
+                        title: 'add table',
+                        autoHeight: true,
+                        defaultType: 'textfield',
+                        collapsible: true,
+                        items: [
+                            {
+                                id: 'column-id',
+                                fieldLabel: 'Column',
+                                name: 'column',
+                                anchor: '90%'
+                            },
+                            {
+                                id: 'row-id',
+                                fieldLabel: 'Row',
+                                name: 'row',
+                                anchor: '90%'
+                            }
+                        ]
+                    }
+                ]
+            }),
+            buttons: [{
+                text:'Add',
+                listeners: {
+                    'click': function (btn, eventObject) {
+                        let column = Ext.getCmp('column-id').getValue();
+                        let row = Ext.getCmp('row-id').getValue();
+                        let array = new Array();
+                        for (let i = 0; i < row; i++) {
+                            array[i] = new Array();
+                            for (let j = 0; j < column; j++) {
+                                array[i].push({name: Math.random().toString(36).substr(2), age: Math.ceil(Math.random()*100)});
+                            }
+                        }
+                        tpl.overwrite(tablePanel.body, array);
+                        win.hide();
+                    }
+                }
+            },{
+                text: 'Close',
+                handler: function(){
+                    win.hide();
+                }
+            }]
+        });
+
+        const win2 = new Ext.Window({
+            layout:'fit',
+            width:500,
+            height:100,
+            closeAction:'hide',
+            plain: true,
+
+            items: [pbar2]
+        });
+
+        let replyButton = new Ext.Button({
+            id: 'reply',
+            text: 'reply',
+            disabled: true,
+            listeners: {
+                'click': function () {
+                    win2.show();
+                    Runner.run(pbar2, Ext.get('reply'), 3, function(){
+                        pbar2.reset();
+                        pbar2.updateText('Done.');
+                        const task = new Ext.util.DelayedTask(function () {
+                            win2.hide();
+                        })
+                        task.delay(2000);
+                    });
+                }
+            }
+        })
+
+        let tpl = new Ext.XTemplate([
+            '<table><tpl for="values"><tr>',
+            '<tpl for="values"><td>table</td></tpl>',
+            '</tr></tpl></table>'
+        ])
+
+        let text = new Ext.form.TextArea({
+            id: 'text',
+            width: 500,
+            height: 300,
+            listeners: {
+                'change': function (form, newValue, oldValue) {
+                    if (Ext.isEmpty(newValue)){
+                        Ext.getCmp('reply').setDisabled(true)
+                    } else {
+                        Ext.getCmp('reply').setDisabled(false)
+                    }
+                }
+            }
+        })
+
+        let reset = new Ext.menu.Item({
+            text: 'reset',
+            listeners: {
+                'click': function () {
+                    Ext.getCmp('text').setValue("")
+                }
+            }
+        })
+
+        let table = new Ext.menu.Item({
+            text: 'Table',
+            listeners: {
+                'click': function () {
+                    win.show()
+                }
+            }
+        })
+
+        let menu = new Ext.menu.Menu({
+            items: [{
+                text: 'Edit',
+                menu: [
+                    reset
+                ]
+            },{
+                text: 'Insert',
+                menu: [
+                    table
+                ]
+            }]
+        })
+
+        let toolbar = new Ext.Toolbar({
+            items: [{
+                text: 'Menu',
+                menu: menu
+            },
+                '-'
+            ]
+        })
+
+        let editor = new Ext.Panel({
+            renderTo: 'editor',
+            items: [
+                toolbar,
+                text,
+                replyButton,
+            ]
+        })
+    })
+</script>
+<body>
+<div id="layout">
+    <div id="editor"></div>
+    <div id="table"></div>
+</div>
+</body>
+</html>

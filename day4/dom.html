@@ -1,0 +1,157 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="./../ext-3.3.0/resources/css/ext-all.css" rel="stylesheet" type="text/css"/>
+    <script src="./../ext-3.3.0/adapter/ext/ext-base.js" type="text/javascript"></script>
+    <script src="./../ext-3.3.0/ext-all.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./../cancelButton.js"></script>
+</head>
+<script>
+    // Ext.onReady(function () {
+    //     let json = `{
+    //         'name': 'yy',
+    //         'sex': 'female',
+    //         'habit': 'run'
+    //     }`
+    //     let o = {
+    //         text: 'go',
+    //         items: [{
+    //             game: 'gg',
+    //             slogan: 'yy'
+    //         }]
+    //     }
+    //     console.log(o)
+    //     console.log(Ext.encode(o))
+    //     console.log(json)
+    //     console.log(Ext.decode(json))
+    //
+    //     let a = {
+    //         username: 'yy',
+    //         pwd: '666'
+    //     }
+    //     let b = {
+    //         username: 'gg'
+    //     }
+    //     let c = {
+    //         username: 'qq',
+    //         pwd: '999'
+    //     }
+    //     Ext.apply(a, b)
+    //     console.log(a.username)
+    //     Ext.applyIf(a, c)
+    //     console.log(a.pwd)
+    //     let array = [
+    //         a,
+    //         b,
+    //         c
+    //     ]
+    //     let str = ""
+    //     Ext.each(array, function (e) {
+    //         if (!Ext.isEmpty(e.pwd))
+    //         str += e.pwd
+    //     })
+    //     console.log(str)
+    //
+    //     let panel = new Ext.Panel({
+    //         renderTo: 'layout',
+    //         items: [{
+    //             xtype: 'com.penny.CancelButton',
+    //             id: 'cancel'
+    //         }]
+    //     })
+    // })
+
+    // Ext.onReady(function () {
+    //     let data = {name: 'gg', age: '99'}
+    //     let tpl = new Ext.Template([
+    //         '<table><tr>',
+    //         '<td>name:{name}, age:{age}</td>',
+    //         '</tr></table>'
+    //     ])
+    //     tpl.compile()
+    //     let panel = new Ext.Panel({
+    //         renderTo: 'layout',
+    //         data: data,
+    //         tpl: tpl
+    //     })
+    // })
+
+    // Ext.onReady(function () {
+    //     let data = [{
+    //         name: 'gg',
+    //         age: '99',
+    //         address: 'first'
+    //     },{
+    //         name: 'pp',
+    //         age: '60',
+    //         address: 'ss'
+    //     },{
+    //         name: 'bb',
+    //         age: '1',
+    //         address: 'tt'
+    //     },{
+    //         name: 'dd',
+    //         age: '10',
+    //         address: '5555'
+    //     }]
+    //     let tpl = new Ext.XTemplate(
+    //         '<div><tpl for="values"><tpl if="age > 10">',
+    //         '<p>name:{name}, age:{age}</p>',
+    //         '<p>address:{address}</p>',
+    //         '</tpl></tpl></div>'
+    //     )
+    //     tpl.compile()
+    //     let panel = new Ext.Panel({
+    //         renderTo: 'layout',
+    //         data: data,
+    //         tpl: tpl
+    //     })
+    // })
+
+    // Ext.onReady(function () {
+    //
+    //     let task = new Ext.util.DelayedTask(function () {
+    //         console.log('hello world!' + new Date().format('Y-m-d'));
+    //     });
+    //     task.delay(3000);
+    //
+    //     let taskRunner = {
+    //         run: function () {
+    //             Ext.fly('clock').update(new Date().format('g:i:s A'))
+    //         },
+    //         interval: 1000
+    //     };
+    //
+    //     let runner = new Ext.util.TaskRunner()
+    //     runner.start(taskRunner)
+    //     // same as Ext.TaskMgr.start(task);
+    //
+    //     let stop = new Ext.util.DelayedTask(function () {
+    //         runner.stop(taskRunner);
+    //     })
+    //     stop.delay(5000)
+    // })
+
+    Ext.onReady(function () {
+        new Ext.form.TextArea({renderTo: 'layout'});
+        var el = Ext.get('layout');
+        var nav = new Ext.KeyMap(el, {
+            key: 'enter',
+            fn : function(e){
+                console.log('hello world');
+            }
+        });
+    })
+
+</script>
+<body>
+<div id="layout">
+    <div id="clock"></div>
+<!--    <p>p1</p>-->
+<!--    <div class="red">red</div>-->
+<!--    <p>p2</p>-->
+<!--    <div id="yellow" class="red">yellow</div>-->
+<!--    <p>p3</p>-->
+</div>
+</body>
+</html>
